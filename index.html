@@ -1,1 +1,218 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asma's Online | Ultimate Dashboard V11.0</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Inter', 'Segoe UI', sans-serif; 
+            background-color: #0b0f1a; 
+            color: #e2e8f0; 
+            display: flex; 
+            min-height: 100vh;
+        }
+        
+        /* Sidebar Navigation */
+        .sidebar { 
+            width: 260px; 
+            background: #111827; 
+            height: 100vh; 
+            padding: 20px; 
+            position: fixed; 
+            left: 0; top: 0;
+            border-right: 1px solid #1f2937; 
+            display: flex; flex-direction: column; 
+            z-index: 1000;
+        }
+        .sidebar h1 { color: #fbbf24; font-size: 22px; text-align: center; font-weight: 900; }
+        .sidebar p { font-size: 10px; text-align: center; color: #6366f1; margin-bottom: 25px; font-weight: bold; }
+        .sidebar a { color: #9ca3af; text-decoration: none; display: block; padding: 12px 15px; border-radius: 10px; margin-bottom: 5px; transition: 0.3s; font-size: 13px; }
+        .sidebar a:hover { background: #1f2937; color: #fbbf24; }
 
+        /* Main Workspace */
+        .main { 
+            margin-left: 260px; 
+            padding: 30px; 
+            flex-grow: 1; 
+            width: calc(100% - 260px);
+        }
+        
+        /* Search Bar Section */
+        .search-container {
+            margin-bottom: 25px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .search-input {
+            flex-grow: 1;
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: 1px solid #374151;
+            background: #1f2937;
+            color: white;
+            outline: none;
+        }
+        .search-input:focus { border-color: #6366f1; box-shadow: 0 0 10px rgba(99, 102, 241, 0.2); }
+
+        /* Premium Banner */
+        .premium-banner { 
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%); 
+            color: white; padding: 12px; border-radius: 12px; margin-bottom: 25px;
+        }
+
+        /* Section Headings */
+        .section-box { margin-bottom: 35px; }
+        .section-title { font-size: 17px; font-weight: 700; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; color: #f8fafc; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+
+        /* Grid Layout */
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); 
+            gap: 15px; 
+        }
+        
+        .card { 
+            background: #1f2937; 
+            padding: 20px; 
+            border-radius: 15px; 
+            text-align: center; 
+            border: 1px solid #374151; 
+            transition: 0.3s;
+        }
+        .card:hover { transform: translateY(-5px); border-color: #fbbf24; background: #262f3f; }
+        .card h3 { font-size: 14px; margin-bottom: 12px; color: #f1f5f9; min-height: 40px; display: flex; align-items: center; justify-content: center; line-height: 1.3; }
+        
+        .action-btn { 
+            background: #374151; color: white; padding: 10px; text-decoration: none; border-radius: 10px; font-size: 11px; font-weight: 700; display: block; 
+        }
+        .card:hover .action-btn { background: #fbbf24; color: #000; }
+
+        /* Receipt Tool */
+        .receipt-card { background: #fff; color: #1e293b; padding: 25px; border-radius: 15px; width: 100%; max-width: 400px; border-top: 6px solid #6366f1; }
+        .receipt-card input { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #e2e8f0; border-radius: 8px; }
+        .p-btn { background: #6366f1; color: white; border: none; padding: 12px; width: 100%; border-radius: 10px; font-weight: 800; cursor: pointer; }
+
+        @media print {
+            body * { visibility: hidden; }
+            .receipt-card, .receipt-card * { visibility: visible; }
+            .receipt-card { position: absolute; left: 0; top: 0; width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h1>ASMA'S</h1>
+        <p>V11.0 ULTIMATE PORTAL</p>
+        <a href="#health">🏥 Health Services</a>
+        <a href="#rto">🚗 RTO & Vehicles</a>
+        <a href="#govt">🏛️ Govt & Voter</a>
+        <a href="#finance">💳 Pan & Finance</a>
+        <a href="#payment">💰 Treasury & Welfare</a>
+        <a href="#utility">💡 Utility Bills</a>
+        <a href="#receipt">🧾 Cash Receipt</a>
+        <div style="margin-top: auto; background: #6366f1; padding: 12px; border-radius: 10px; text-align: center;">
+            <a href="https://app.turtlemintpro.com/home" target="_blank" style="color:white; font-weight:800; padding:0; margin:0;">INSURANCE LOGIN</a>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-input" placeholder="സേവനങ്ങൾ തിരയൂ (Search for services...)" onkeyup="searchServices()">
+        </div>
+
+        <div class="premium-banner">
+            <marquee scrollamount="6" style="font-weight: 600;">🏥 പുതിയ അപ്‌ഡേഷൻ: eHealth Kerala പോർട്ടൽ ചേർത്തു. ആശുപത്രി ടിക്കറ്റുകൾ ഇനി മുൻകൂട്ടി ബുക്ക് ചെയ്യാം. | Asma's Online Center - Kozhikode.</marquee>
+        </div>
+
+        <div id="health" class="section-box">
+            <div class="section-title"><div class="dot" style="background: #10b981;"></div> Health Services (ആരോഗ്യ സേവനങ്ങൾ)</div>
+            <div class="grid">
+                <div class="card" style="border-top: 3px solid #10b981;">
+                    <h3>eHealth Kerala (OP Ticket)</h3>
+                    <a href="https://ehealth.kerala.gov.in/portal/" target="_blank" class="action-btn">OPEN PORTAL</a>
+                </div>
+                <div class="card">
+                    <h3>Digital Health ID (ABHA)</h3>
+                    <a href="https://abha.abdm.gov.in/" target="_blank" class="action-btn">CREATE ID</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="govt" class="section-box">
+            <div class="section-title"><div class="dot" style="background: #fbbf24;"></div> Govt & Voter Services</div>
+            <div class="grid">
+                <div class="card" style="border-top: 3px solid #fbbf24;">
+                    <h3>Voter Service Portal</h3>
+                    <a href="https://voters.eci.gov.in/" target="_blank" class="action-btn">OPEN SITE</a>
+                </div>
+                <div class="card"><h3>K-SMART LSGD</h3><a href="https://ksmart.lsgkerala.gov.in/" target="_blank" class="action-btn">OPEN SITE</a></div>
+                <div class="card"><h3>My Aadhar Portal</h3><a href="https://myaadhaar.uidai.gov.in/" target="_blank" class="action-btn">OPEN SITE</a></div>
+                <div class="card"><h3>E-District Kerala</h3><a href="https://edistrict.kerala.gov.in/" target="_blank" class="action-btn">OPEN SITE</a></div>
+            </div>
+        </div>
+
+        <div id="finance" class="section-box">
+            <div class="section-title"><div class="dot" style="background: #ec4899;"></div> Pan & Finance</div>
+            <div class="grid">
+                <div class="card" style="border-top: 3px solid #ec4899;">
+                    <h3>Protean PAN (NSDL)</h3>
+                    <a href="https://onlineservices.proteantech.in/paam/endUserRegisterContact.html" target="_blank" class="action-btn">APPLY PAN</a>
+                </div>
+                <div class="card"><h3>Income Tax Filing</h3><a href="https://www.incometax.gov.in/" target="_blank" class="action-btn">OPEN SITE</a></div>
+            </div>
+        </div>
+
+        <div id="rto" class="section-box">
+            <div class="section-title"><div class="dot" style="background: #ef4444;"></div> RTO & Vehicle Services</div>
+            <div class="grid">
+                <div class="card" style="border-top: 3px solid #ef4444;"><h3>Vahan (Tax/Transfer)</h3><a href="https://vahan.parivahan.gov.in/" target="_blank" class="action-btn">OPEN SITE</a></div>
+                <div class="card"><h3>Sarathi (License)</h3><a href="https://sarathi.parivahan.gov.in/" target="_blank" class="action-btn">OPEN SITE</a></div>
+                <div class="card"><h3>E-Challan Payment</h3><a href="https://echallan.parivahan.gov.in/" target="_blank" class="action-btn">PAY NOW</a></div>
+            </div>
+        </div>
+
+        <div id="payment" class="section-box">
+            <div class="section-title"><div class="dot" style="background: #3b82f6;"></div> Treasury & Welfare</div>
+            <div class="grid">
+                <div class="card"><h3>E-Treasury Receipts</h3><a href="https://etreasury.kerala.gov.in/" target="_blank" class="action-btn">OPEN SITE</a></div>
+                <div class="card"><h3>Legal Metrology (LMOMS)</h3><a href="https://lmoms.kerala.gov.in/" target="_blank" class="action-btn">GUEST LOGIN</a></div>
+                <div class="card"><h3>Motor Workers Welfare</h3><a href="https://kmtwwfb.kerala.gov.in/" target="_blank" class="action-btn">OPEN PORTAL</a></div>
+            </div>
+        </div>
+
+        <div id="receipt" class="section-box">
+            <div class="section-title">Cash Receipt Generator</div>
+            <div class="receipt-card">
+                <h3 style="text-align: center; color: #1e293b; margin-bottom: 15px;">Asma's Online Center</h3>
+                <input type="text" placeholder="Customer Name">
+                <input type="text" placeholder="Service Name">
+                <input type="number" placeholder="Amount (₹)">
+                <p style="font-size: 11px; margin: 10px 0;">Date: <strong id="dDate"></strong></p>
+                <button class="p-btn" onclick="window.print()">PRINT RECEIPT</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('dDate').innerText = new Date().toLocaleDateString('en-IN');
+
+        function searchServices() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let cards = document.getElementsByClassName('card');
+            for (let i = 0; i < cards.length; i++) {
+                let h3 = cards[i].getElementsByTagName('h3')[0];
+                if (h3.innerText.toLowerCase().includes(input)) {
+                    cards[i].style.display = "";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>
