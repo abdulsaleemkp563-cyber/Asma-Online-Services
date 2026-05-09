@@ -3,59 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asma's Online | Professional Dashboard V12.1</title>
+    <title>Asma's Online | Professional Dashboard V12.2</title>
     <style>
-        /* [വെബ്സൈറ്റ് ഡിസൈൻ മാറ്റമില്ലാതെ തുടരുന്നു...] */
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Inter', sans-serif; background-color: #0b0f1a; color: #e2e8f0; display: flex; min-height: 100vh; }
-        .sidebar { width: 260px; background: #111827; height: 100vh; padding: 20px; position: fixed; border-right: 1px solid #1f2937; z-index: 1000; }
-        .sidebar h1 { color: #fbbf24; font-size: 22px; text-align: center; }
-        .main { margin-left: 260px; padding: 30px; flex-grow: 1; }
-        .form-container { background: #1f2937; padding: 25px; border-radius: 15px; max-width: 500px; margin-top: 20px; }
-        .form-container input { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; background: #0b0f1a; color: white; border: 1px solid #374151; }
+        body { 
+            font-family: 'Inter', 'Segoe UI', sans-serif; 
+            background-color: #0b0f1a; 
+            color: #e2e8f0; 
+            display: flex; 
+            min-height: 100vh;
+        }
+        
+        /* Sidebar Navigation */
+        .sidebar { 
+            width: 260px; background: #111827; height: 100vh; padding: 20px; 
+            position: fixed; left: 0; top: 0; border-right: 1px solid #1f2937; 
+            display: flex; flex-direction: column; z-index: 1000;
+        }
+        .sidebar h1 { color: #fbbf24; font-size: 22px; text-align: center; font-weight: 900; }
+        .sidebar p { font-size: 10px; text-align: center; color: #6366f1; margin-bottom: 25px; font-weight: bold; }
+        .sidebar a { color: #9ca3af; text-decoration: none; display: block; padding: 12px 15px; border-radius: 10px; margin-bottom: 5px; transition: 0.3s; font-size: 13px; }
+        .sidebar a:hover { background: #1f2937; color: #fbbf24; }
+
+        /* Main Workspace */
+        .main { 
+            margin-left: 260px; padding: 30px; flex-grow: 1; width: calc(100% - 260px);
+        }
+        
+        /* Section Styling */
+        .section-box { margin-bottom: 35px; }
+        .section-title { font-size: 17px; font-weight: 700; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; color: #f8fafc; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 15px; }
+        .card { background: #1f2937; padding: 20px; border-radius: 15px; text-align: center; border: 1px solid #374151; }
+        .action-btn { background: #374151; color: white; padding: 10px; text-decoration: none; border-radius: 10px; font-size: 11px; font-weight: 700; display: block; margin-top: 10px; }
+
+        /* Receipt Form UI */
+        .form-container { background: #1f2937; padding: 25px; border-radius: 15px; border: 1px solid #374151; max-width: 500px; }
+        .form-container input { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #374151; background: #0b0f1a; color: white; }
         .print-trigger-btn { background: #6366f1; color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; font-weight: 800; cursor: pointer; }
+
+        /* PRINT STYLES - ബ്ലാക്ക് കളർ ഒഴിവാക്കാൻ */
         #printableReceipt { display: none; }
 
-        /* PRINT SETTINGS - കൃത്യമായി A4 മധ്യഭാഗത്ത് വരാൻ */
         @media print {
-            @page { size: A4; margin: 0; } /* ബ്രൗസർ ഹെഡർ ഒഴിവാക്കാൻ */
-            body * { visibility: hidden; }
-            #printableReceipt, #printableReceipt * { visibility: visible; }
+            @page { size: A4; margin: 0; }
+            html, body { background-color: white !important; height: auto; }
+            .sidebar, .main, .search-container, .premium-banner { display: none !important; }
+            
             #printableReceipt { 
-                display: flex !important; 
-                flex-direction: column;
-                align-items: center; /* മധ്യഭാഗത്തേക്ക് നീക്കുന്നു */
-                justify-content: center;
-                position: absolute; 
-                left: 0; top: 0; 
+                display: block !important; 
+                position: relative;
                 width: 100%;
-                padding: 20mm;
-                color: #000;
-                background: white;
+                background: white !important;
+                color: black !important;
+                padding: 15mm 10mm;
             }
             .receipt-copy {
-                width: 170mm; /* A4-ൽ അനുയോജ്യമായ വീതി */
+                width: 180mm;
+                margin: 0 auto 25mm auto;
                 border: 2px solid #000;
-                padding: 15mm;
-                margin-bottom: 20mm;
-                border-radius: 5px;
-                position: relative;
+                padding: 10mm;
+                border-radius: 8px;
+                background: white !important;
             }
             .receipt-header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 15px; }
-            .receipt-row { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 16px; border-bottom: 1px dotted #888; padding-bottom: 5px; }
-            .copy-label { position: absolute; right: 10px; top: 5px; font-size: 10px; text-transform: uppercase; font-weight: bold; }
+            .receipt-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 16px; border-bottom: 1px dotted #888; padding-bottom: 5px; }
         }
     </style>
 </head>
 <body>
+
     <div class="sidebar">
         <h1>ASMA'S</h1>
-        <p>MASTER PORTAL V12.1</p>
+        <p>MASTER PORTAL V12.2</p>
+        <a href="#receipt">🧾 Cash Receipt</a>
+        <a href="#rto">🚗 RTO Services</a>
+        <a href="#govt">🏛️ Govt Services</a>
+        <a href="https://app.turtlemintpro.com/home" target="_blank" style="background:#10b981; color:white; font-weight:bold; margin-top:20px; text-align:center;">INSURANCE LOGIN</a>
     </div>
 
     <div class="main">
-        <div id="receipt">
-            <h2 style="color: #fbbf24;">Cash Receipt Generator</h2>
+        <div id="receipt" class="section-box">
+            <h2 class="section-title">Cash Receipt Generator</h2>
             <div class="form-container">
                 <input type="text" id="custName" placeholder="Customer Name">
                 <input type="text" id="servName" placeholder="Service Name">
@@ -63,33 +92,41 @@
                 <button class="print-trigger-btn" onclick="generateAndPrint()">PRINT A4 RECEIPT</button>
             </div>
         </div>
+
+        <div id="rto" class="section-box">
+            <h2 class="section-title">RTO & Vehicle Services</h2>
+            <div class="grid">
+                <div class="card"><h3>Vahan (Tax/Transfer)</h3><a href="https://vahan.parivahan.gov.in/" target="_blank" class="action-btn">OPEN SITE</a></div>
+                <div class="card"><h3>Sarathi (License)</h3><a href="https://sarathi.parivahan.gov.in/" target="_blank" class="action-btn">OPEN SITE</a></div>
+            </div>
+        </div>
     </div>
 
     <div id="printableReceipt">
         <div class="receipt-copy">
-            <span class="copy-label">CUSTOMER COPY [cite: 12]</span>
+            <div style="text-align:right; font-size:10px; font-weight:bold;">CUSTOMER COPY</div>
             <div class="receipt-header">
-                <h2 style="font-size: 22px;">ASMA'S ONLINE SERVICE CENTER [cite: 11, 16]</h2>
-                <p>Kozhikode, Kerala | Ph: +91 0000000000 [cite: 11]</p>
+                <h2 style="font-size: 24px;">ASMA'S ONLINE SERVICE CENTER</h2>
+                <p>Kozhikode, Kerala | Ph: +91 0000000000</p>
             </div>
-            <div class="receipt-row"><span>Date: [cite: 2, 6]</span><strong id="pDate1"></strong></div>
-            <div class="receipt-row"><span>Customer Name: [cite: 3, 7]</span><strong id="pCust1"></strong></div>
-            <div class="receipt-row"><span>Service Provided: [cite: 4, 8]</span><strong id="pServ1"></strong></div>
-            <div class="receipt-row" style="border:none; margin-top:20px; font-size:20px;">
-                <span>Total Amount Paid: [cite: 5, 9]</span><strong>₹ <span id="pAmt1"></span> [cite: 18, 24]</strong>
+            <div class="receipt-row"><span>Date:</span><strong id="pDate1"></strong></div>
+            <div class="receipt-row"><span>Customer Name:</span><strong id="pCust1"></strong></div>
+            <div class="receipt-row"><span>Service:</span><strong id="pServ1"></strong></div>
+            <div class="receipt-row" style="border:none; margin-top:20px; font-size:22px;">
+                <span>Total Amount:</span><strong>₹ <span id="pAmt1"></span></strong>
             </div>
-            <div style="margin-top:40px; text-align:right;">Authorized Signatory [cite: 19]</div>
+            <div style="margin-top:40px; text-align:right;">Authorized Signatory</div>
         </div>
 
         <div class="receipt-copy" style="border-style: dashed;">
-            <span class="copy-label">OFFICE COPY [cite: 20]</span>
+            <div style="text-align:right; font-size:10px; font-weight:bold;">OFFICE COPY</div>
             <div class="receipt-header">
-                <h2 style="font-size: 18px;">ASMA'S ONLINE SERVICE CENTER [cite: 16]</h2>
+                <h2 style="font-size: 20px;">ASMA'S ONLINE SERVICE CENTER</h2>
             </div>
-            <div class="receipt-row"><span>Date: [cite: 21]</span><strong id="pDate2"></strong></div>
-            <div class="receipt-row"><span>Customer: [cite: 22]</span><strong id="pCust2"></strong></div>
-            <div class="receipt-row"><span>Service: [cite: 23]</span><strong id="pServ2"></strong></div>
-            <div class="receipt-row" style="border:none; font-size:18px;">
+            <div class="receipt-row"><span>Date:</span><strong id="pDate2"></strong></div>
+            <div class="receipt-row"><span>Customer:</span><strong id="pCust2"></strong></div>
+            <div class="receipt-row"><span>Service:</span><strong id="pServ2"></strong></div>
+            <div class="receipt-row" style="border:none; font-size:20px;">
                 <span>Amount:</span><strong>₹ <span id="pAmt2"></span></strong>
             </div>
         </div>
@@ -102,15 +139,15 @@
             const amount = document.getElementById('amt').value;
             const date = new Date().toLocaleDateString('en-IN', {day:'2-digit', month:'long', year:'numeric'});
 
-            document.getElementById('pDate1').innerText = date; [cite: 13]
-            document.getElementById('pCust1').innerText = name; [cite: 14]
-            document.getElementById('pServ1').innerText = service; [cite: 15]
-            document.getElementById('pAmt1').innerText = amount; [cite: 18]
+            document.getElementById('pDate1').innerText = date;
+            document.getElementById('pCust1').innerText = name;
+            document.getElementById('pServ1').innerText = service;
+            document.getElementById('pAmt1').innerText = amount;
 
-            document.getElementById('pDate2').innerText = date; [cite: 21]
-            document.getElementById('pCust2').innerText = name; [cite: 22]
-            document.getElementById('pServ2').innerText = service; [cite: 23]
-            document.getElementById('pAmt2').innerText = amount; [cite: 24]
+            document.getElementById('pDate2').innerText = date;
+            document.getElementById('pCust2').innerText = name;
+            document.getElementById('pServ2').innerText = service;
+            document.getElementById('pAmt2').innerText = amount;
 
             window.print();
         }
