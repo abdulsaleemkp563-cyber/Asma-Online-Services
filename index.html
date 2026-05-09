@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asma's Online | Professional Dashboard V12.2</title>
     <style>
+        /* വെബ്സൈറ്റ് ഡിസൈൻ */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { 
             font-family: 'Inter', 'Segoe UI', sans-serif; 
@@ -42,13 +43,14 @@
         .form-container input { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #374151; background: #0b0f1a; color: white; }
         .print-trigger-btn { background: #6366f1; color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; font-weight: 800; cursor: pointer; }
 
-        /* PRINT STYLES - ബ്ലാക്ക് കളർ ഒഴിവാക്കാൻ */
+        /* PRINT STYLES - കറുത്ത നിറം ഒഴിവാക്കാൻ */
         #printableReceipt { display: none; }
 
         @media print {
             @page { size: A4; margin: 0; }
+            /* പ്രിന്റ് ചെയ്യുമ്പോൾ വെബ്സൈറ്റ് പശ്ചാത്തലം വെളുത്തതാക്കുന്നു */
             html, body { background-color: white !important; height: auto; }
-            .sidebar, .main, .search-container, .premium-banner { display: none !important; }
+            .sidebar, .main { display: none !important; }
             
             #printableReceipt { 
                 display: block !important; 
@@ -77,8 +79,10 @@
         <h1>ASMA'S</h1>
         <p>MASTER PORTAL V12.2</p>
         <a href="#receipt">🧾 Cash Receipt</a>
-        <a href="#rto">🚗 RTO Services</a>
+        <a href="#rto">🚗 RTO & Vehicles</a>
         <a href="#govt">🏛️ Govt Services</a>
+        <a href="#payment">💰 Treasury & Welfare</a>
+        <a href="#utility">💡 Utility Bills</a>
         <a href="https://app.turtlemintpro.com/home" target="_blank" style="background:#10b981; color:white; font-weight:bold; margin-top:20px; text-align:center;">INSURANCE LOGIN</a>
     </div>
 
@@ -86,9 +90,9 @@
         <div id="receipt" class="section-box">
             <h2 class="section-title">Cash Receipt Generator</h2>
             <div class="form-container">
-                <input type="text" id="custName" placeholder="Customer Name">
-                <input type="text" id="servName" placeholder="Service Name">
-                <input type="number" id="amt" placeholder="Amount (₹)">
+                <input type="text" id="custName" placeholder="കസ്റ്റമർ പേര്">
+                <input type="text" id="servName" placeholder="സേവനം">
+                <input type="number" id="amt" placeholder="തുക (₹)">
                 <button class="print-trigger-btn" onclick="generateAndPrint()">PRINT A4 RECEIPT</button>
             </div>
         </div>
@@ -98,30 +102,50 @@
             <div class="grid">
                 <div class="card"><h3>Vahan (Tax/Transfer)</h3><a href="https://vahan.parivahan.gov.in/" target="_blank" class="action-btn">OPEN SITE</a></div>
                 <div class="card"><h3>Sarathi (License)</h3><a href="https://sarathi.parivahan.gov.in/" target="_blank" class="action-btn">OPEN SITE</a></div>
+                <div class="card"><h3>E-Challan Pay</h3><a href="https://echallan.parivahan.gov.in/" target="_blank" class="action-btn">PAY NOW</a></div>
+            </div>
+        </div>
+
+        <div id="govt" class="section-box">
+            <h2 class="section-title">Government Services</h2>
+            <div class="grid">
+                <div class="card"><h3>K-SMART LSGD</h3><a href="https://ksmart.lsgkerala.gov.in/" target="_blank" class="action-btn">OPEN SITE</a></div>
+                <div class="card"><h3>My Aadhar Portal</h3><a href="https://myaadhaar.uidai.gov.in/" target="_blank" class="action-btn">OPEN SITE</a></div>
+                <div class="card"><h3>E-District Kerala</h3><a href="https://edistrict.kerala.gov.in/" target="_blank" class="action-btn">OPEN SITE</a></div>
+                <div class="card"><h3>Voter Service Portal</h3><a href="https://voters.eci.gov.in/" target="_blank" class="action-btn">OPEN SITE</a></div>
+            </div>
+        </div>
+
+        <div id="payment" class="section-box">
+            <h2 class="section-title">Treasury & Welfare</h2>
+            <div class="grid">
+                <div class="card"><h3>E-Treasury Receipts</h3><a href="https://etreasury.kerala.gov.in/index.php/departmental_receipts" target="_blank" class="action-btn">OPEN SITE</a></div>
+                <div class="card"><h3>Legal Metrology</h3><a href="https://lmoms.kerala.gov.in/lmoms_verify/guestLogin" target="_blank" class="action-btn">GUEST LOGIN</a></div>
+                <div class="card"><h3>Motor Workers Welfare</h3><a href="https://kmtwwfb.kerala.gov.in/" target="_blank" class="action-btn">OPEN PORTAL</a></div>
             </div>
         </div>
     </div>
 
     <div id="printableReceipt">
         <div class="receipt-copy">
-            <div style="text-align:right; font-size:10px; font-weight:bold;">CUSTOMER COPY</div>
+            <div style="text-align:right; font-size:10px; font-weight:bold;">CUSTOMER COPY [cite: 30]</div>
             <div class="receipt-header">
-                <h2 style="font-size: 24px;">ASMA'S ONLINE SERVICE CENTER</h2>
-                <p>Kozhikode, Kerala | Ph: +91 0000000000</p>
+                <h2 style="font-size: 24px;">ASMA'S ONLINE SERVICE CENTER [cite: 11, 28]</h2>
+                <p>Kozhikode, Kerala | Ph: +91 0000000000 [cite: 11, 28]</p>
             </div>
-            <div class="receipt-row"><span>Date:</span><strong id="pDate1"></strong></div>
-            <div class="receipt-row"><span>Customer Name:</span><strong id="pCust1"></strong></div>
-            <div class="receipt-row"><span>Service:</span><strong id="pServ1"></strong></div>
+            <div class="receipt-row"><span>തീയതി (Date):</span><strong id="pDate1"></strong></div>
+            <div class="receipt-row"><span>കസ്റ്റമർ (Customer):</span><strong id="pCust1"></strong></div>
+            <div class="receipt-row"><span>സേവനം (Service):</span><strong id="pServ1"></strong></div>
             <div class="receipt-row" style="border:none; margin-top:20px; font-size:22px;">
-                <span>Total Amount:</span><strong>₹ <span id="pAmt1"></span></strong>
+                <span>ആകെ തുക (Total Amount):</span><strong>₹ <span id="pAmt1"></span></strong>
             </div>
-            <div style="margin-top:40px; text-align:right;">Authorized Signatory</div>
+            <div style="margin-top:40px; text-align:right;">Authorized Signatory [cite: 19, 31]</div>
         </div>
 
         <div class="receipt-copy" style="border-style: dashed;">
-            <div style="text-align:right; font-size:10px; font-weight:bold;">OFFICE COPY</div>
+            <div style="text-align:right; font-size:10px; font-weight:bold;">OFFICE COPY [cite: 20, 32]</div>
             <div class="receipt-header">
-                <h2 style="font-size: 20px;">ASMA'S ONLINE SERVICE CENTER</h2>
+                <h2 style="font-size: 20px;">ASMA'S ONLINE SERVICE CENTER [cite: 16, 33]</h2>
             </div>
             <div class="receipt-row"><span>Date:</span><strong id="pDate2"></strong></div>
             <div class="receipt-row"><span>Customer:</span><strong id="pCust2"></strong></div>
@@ -139,11 +163,13 @@
             const amount = document.getElementById('amt').value;
             const date = new Date().toLocaleDateString('en-IN', {day:'2-digit', month:'long', year:'numeric'});
 
+            // കസ്റ്റമർ കോപ്പി ഫിൽ ചെയ്യുന്നു
             document.getElementById('pDate1').innerText = date;
             document.getElementById('pCust1').innerText = name;
             document.getElementById('pServ1').innerText = service;
             document.getElementById('pAmt1').innerText = amount;
 
+            // ഓഫീസ് കോപ്പി ഫിൽ ചെയ്യുന്നു
             document.getElementById('pDate2').innerText = date;
             document.getElementById('pCust2').innerText = name;
             document.getElementById('pServ2').innerText = service;
